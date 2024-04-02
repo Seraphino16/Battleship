@@ -49,6 +49,7 @@
             this.dom.style.width = "" + utils.CELL_SIZE * this.life + "px";
             this.dom.style.position = "relative";
             this.dom.style.opacity = "0.8";
+            this.dom.style.rotate = "0deg";
             this.dom.style.backgroundColor = this.color;
         }
     };

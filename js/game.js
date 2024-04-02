@@ -124,6 +124,7 @@
             // on ajoute des acouteur uniquement sur la grid (délégation d'événement)
             this.grid.addEventListener('mousemove', _.bind(this.handleMouseMove, this));
             this.grid.addEventListener('click', _.bind(this.handleClick, this));
+            this.grid.addEventListener('contextmenu', _.bind(this.handleRightClick, this));
         },
         handleMouseMove: function (e) {
             // on est dans la phase de placement des bateau
@@ -141,6 +142,18 @@
                 ship.dom.style.top = "" + (utils.eq(e.target.parentNode)) * utils.CELL_SIZE - (600 + this.players[0].activeShip * 60) + "px";
                 ship.dom.style.left = "" + utils.eq(e.target) * utils.CELL_SIZE - Math.floor(ship.getLife() / 2) * utils.CELL_SIZE + "px";
             }
+        },
+        handleRightClick: function (e) {
+            e.preventDefault();
+            if (this.getPhase() === this.PHASE_INIT_PLAYER && e.target.classList.contains('cell')) {
+                var ship = this.players[0].fleet[this.players[0].activeShip];
+                
+                let r = parseInt(ship.dom.style.rotate);
+                r += 90;
+                ship.dom.style.rotate = r + 'deg';
+                
+            }
+            
         },
         handleClick: function (e) {
             // self garde une référence vers "this" en cas de changement de scope
