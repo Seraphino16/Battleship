@@ -221,6 +221,7 @@
             this.players[0].fleet.forEach(ship => {
                 this.miniGrid.appendChild(ship.dom.cloneNode());
             })
+            this.miniGrid.style.transform = "scale(0.5) translateX(-250px) translateY(-14.25%)";
         }
     };
 

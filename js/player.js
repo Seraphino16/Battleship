@@ -46,7 +46,20 @@
             var ship = this.fleet[this.activeShip];
             var i = 0;
 
-            while (i < ship.getLife()) {
+            let n = Math.floor(ship.getLife() / 2);
+            x -= n;
+
+            // vérifie que l'emplacement du bateau est vide et existe bien dans la grille
+            while(i < ship.getLife()) {
+                if(this.grid[y][x + i] !== 0) {
+                    return false;
+                }
+                i += 1;
+            }
+
+            i = 0;
+
+            while (i < ship.getLife()) {                
                 this.grid[y][x + i] = ship.getId();
                 i += 1;
             }
