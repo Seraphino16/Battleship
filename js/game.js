@@ -218,9 +218,9 @@
             this.players[0].renderTries(this.grid);
         },
         renderMiniMap: function () {
-            let cloneGrid = this.grid.cloneNode(true);
-            this.miniGrid.innerHTML = "";
-            this.miniGrid.appendChild(cloneGrid);
+            this.players[0].fleet.forEach(ship => {
+                this.miniGrid.appendChild(ship.dom.cloneNode());
+            })
         }
     };
 
