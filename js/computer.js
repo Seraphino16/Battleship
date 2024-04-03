@@ -21,9 +21,9 @@
 
             this.fleet.forEach(function (ship) {
                 let y = Math.floor(Math.random() * 10);
-                let x = Math.floor(Math.random() * 10); 
+                let x = Math.floor(Math.random() * 10);
 
-                
+                ship.isVertical = (Math.random() < 0.5) ? false : true;
 
                 let i = 0;
                 while(i < ship.getLife()) {
