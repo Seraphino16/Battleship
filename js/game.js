@@ -144,11 +144,11 @@
                 let halfShip = ship.getLife() / 2;
                 let n = Math.floor(halfShip);
                 let heightGap = 0;
-                if(halfShip % 2 === 0 && ship.isVertical === true) {
+                if (halfShip % 2 === 0 && ship.isVertical === true) {
                     n -= 0.5;
                     heightGap = 0.5
                 }
-                
+
                 ship.dom.style.top = "" + (utils.eq(e.target.parentNode)) * utils.CELL_SIZE - (600 + this.players[0].activeShip * 60) - heightGap * utils.CELL_SIZE + "px";
                 ship.dom.style.left = "" + utils.eq(e.target) * utils.CELL_SIZE - n * utils.CELL_SIZE + "px";
             }
@@ -159,14 +159,14 @@
                 var ship = this.players[0].fleet[this.players[0].activeShip];
 
                 ship.isVertical = ship.isVertical ? false : true;
-                
+
                 let r = parseInt(ship.dom.style.rotate);
                 r = (r === 0) ? 90 : 0;
                 ship.dom.style.rotate = r + 'deg';
 
                 this.handleMouseMove(e);
             }
-            
+
         },
         handleClick: function (e) {
             // self garde une référence vers "this" en cas de changement de scope
@@ -196,7 +196,24 @@
                     }
                     // si on est dans la phase de jeu (du joueur humain)
                 } else if (this.getPhase() === this.PHASE_PLAY_PLAYER) {
-                    this.players[0].play(utils.eq(e.target), utils.eq(e.target.parentNode));
+                    var clickedCell = e.target;
+
+                    // si la case a déjà été cliquée, on ne fait rien
+                    if (clickedCell.classList.contains('hit') || clickedCell.classList.contains('miss')) {
+                        console.log("already clicked");
+                        return;
+                    }
+
+                    // on enregistre le tir
+                    this.players[0].play(utils.eq(clickedCell), utils.eq(clickedCell.parentNode), function (hasSucceed) {
+                        if (hasSucceed) {
+                            clickedCell.style.backgroundColor = "red";
+                            clickedCell.classList.add('hit');
+                        } else {
+                            clickedCell.style.backgroundColor = "grey";
+                            clickedCell.classList.add('miss');
+                        }
+                    });
                 }
             }
         },
