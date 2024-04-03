@@ -18,16 +18,31 @@
             }, 2000);
         },
         isShipOk: function (callback) {
-            var i = 0;
-            var j;
 
-            this.fleet[i].forEach(function (ship, i) {
-                j = 0;
-                while (j < ship.life) {
-                    this.grid[i][j] = ship.getId();
-                    j += 1;
+            this.fleet.forEach(function (ship) {
+                let y = Math.floor(Math.random() * 10);
+                let x = Math.floor(Math.random() * 10); 
+
+                
+
+                let i = 0;
+                while(i < ship.getLife()) {
+                    if(this.grid[y][x + i] !== 0) {
+                        return false;
+                    }
+                    i += 1;
                 }
+
+                i = 0;
+                while (i < ship.getLife()) {
+                    this.grid[y][x + i] = ship.getId();
+                    i += 1;
+                }
+
+                // console.log(this.grid[y]);
             }, this);
+
+            console.log(this.grid);
 
             setTimeout(function () {
                 callback();
