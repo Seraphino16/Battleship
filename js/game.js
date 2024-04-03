@@ -147,11 +147,12 @@
             e.preventDefault();
             if (this.getPhase() === this.PHASE_INIT_PLAYER && e.target.classList.contains('cell')) {
                 var ship = this.players[0].fleet[this.players[0].activeShip];
+
+                ship.isVertical = ship.isVertical ? false : true;
                 
                 let r = parseInt(ship.dom.style.rotate);
                 r += 90;
                 ship.dom.style.rotate = r + 'deg';
-                
             }
             
         },

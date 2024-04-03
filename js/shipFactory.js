@@ -51,6 +51,8 @@
             this.dom.style.opacity = "0.8";
             this.dom.style.rotate = "0deg";
             this.dom.style.backgroundColor = this.color;
+
+            this.isVertical = false;
         }
     };
 

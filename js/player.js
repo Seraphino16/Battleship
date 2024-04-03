@@ -64,6 +64,8 @@
                 i += 1;
             }
 
+            console.log(this.grid);
+
             return true;
         },
         clearPreview: function () {
