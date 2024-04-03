@@ -47,22 +47,42 @@
             var i = 0;
 
             let n = Math.floor(ship.getLife() / 2);
-            x -= n;
+           
 
-            // vérifie que l'emplacement du bateau est vide et existe bien dans la grille
-            while(i < ship.getLife()) {
-                if(this.grid[y][x + i] !== 0) {
-                    return false;
+            if(ship.isVertical === false) {
+                x -= n;
+                 // vérifie que l'emplacement du bateau est vide et existe bien dans la grille
+                while(i < ship.getLife()) {
+                    if(this.grid[y][x + i] !== 0) {
+                        return false;
+                    }
+                    i += 1;
                 }
-                i += 1;
-            }
 
-            i = 0;
+                i = 0;
 
-            while (i < ship.getLife()) {                
-                this.grid[y][x + i] = ship.getId();
-                i += 1;
+                while (i < ship.getLife()) {                
+                    this.grid[y][x + i] = ship.getId();
+                    i += 1;
+                }
+            } else {
+                y -= n;
+                 // vérifie que l'emplacement du bateau est vide et existe bien dans la grille
+                 while(i < ship.getLife()) {
+                    if(this.grid[y + i] === undefined || this.grid[y + i][x] !== 0) {
+                        return false;
+                    }
+                    i += 1;
+                }
+
+                i = 0;
+
+                while (i < ship.getLife()) {                
+                    this.grid[y + i][x] = ship.getId();
+                    i += 1;
+                }
             }
+           
 
             console.log(this.grid);
 
