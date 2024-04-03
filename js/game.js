@@ -151,7 +151,7 @@
                 ship.isVertical = ship.isVertical ? false : true;
                 
                 let r = parseInt(ship.dom.style.rotate);
-                r += 90;
+                r = (r === 0) ? 90 : 0;
                 ship.dom.style.rotate = r + 'deg';
             }
             
