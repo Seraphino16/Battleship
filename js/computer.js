@@ -20,12 +20,27 @@
         isShipOk: function (callback) {
 
             this.fleet.forEach(function (ship) {
-                let y = Math.floor(Math.random() * 10);
-                let x = Math.floor(Math.random() * 10);
+               while(!this.placement(ship));
+            }, this);
 
-                ship.isVertical = (Math.random() < 0.5) ? false : true;
+            let k = 0;
+            while(k < this.grid.length) {
+                console.log(this.grid[k]);
+                k += 1;
+            }
 
-                let i = 0;
+            setTimeout(function () {
+                callback();
+            }, 500);
+        },
+        placement: function (ship) {
+            let y = Math.floor(Math.random() * 10);
+            let x = Math.floor(Math.random() * 10);
+
+            ship.isVertical = (Math.random() < 0.5) ? false : true;
+
+            let i = 0;
+            if(!ship.isVertical) {
                 while(i < ship.getLife()) {
                     if(this.grid[y][x + i] !== 0) {
                         return false;
@@ -38,15 +53,21 @@
                     this.grid[y][x + i] = ship.getId();
                     i += 1;
                 }
+            } else {
+                while(i < ship.getLife()) {
+                    if(this.grid[y + i] === undefined || this.grid[y + i][x] !== 0) {
+                        return false;
+                    }
+                    i += 1;
+                }
 
-                // console.log(this.grid[y]);
-            }, this);
-
-            console.log(this.grid);
-
-            setTimeout(function () {
-                callback();
-            }, 500);
+                i = 0;
+                while (i < ship.getLife()) {
+                    this.grid[y + i][x] = ship.getId();
+                    i += 1;
+                }
+            }
+            return true;
         }
     });
 
