@@ -205,21 +205,13 @@
                     }
 
                     // on enregistre le tir
-                    this.players[0].play(utils.eq(clickedCell), utils.eq(clickedCell.parentNode), function (hasSucceed) {
-                        if (hasSucceed) {
-                            clickedCell.style.backgroundColor = "red";
-                            clickedCell.classList.add('hit');
-                        } else {
-                            clickedCell.style.backgroundColor = "grey";
-                            clickedCell.classList.add('miss');
-                        }
-                    });
+                    this.players[0].play(utils.eq(clickedCell), utils.eq(clickedCell.parentNode), clickedCell);
                 }
             }
         },
         // fonction utlisée par les objets représentant les joueurs (ordinateur ou non)
         // pour placer un tir et obtenir de l'adversaire l'information de réusssite ou non du tir
-        fire: function (from, col, line, callback) {
+        fire: function (from, col, line, callback, clickedCell = undefined) {
             this.wait();
             var self = this;
             var msg = "";
@@ -238,10 +230,18 @@
             target.receiveAttack(col, line, function (hasSucceed) {
                 if (hasSucceed) {
                     msg += "Touché !";
+                    if(clickedCell !== undefined) {
+                        clickedCell.style.backgroundColor = "red";
+                        clickedCell.classList.add('hit');
+                    }
                 } else {
                     msg += "Manqué...";
+                    if(clickedCell !== undefined) {
+                        clickedCell.style.backgroundColor = "grey";
+                        clickedCell.classList.add('miss');
+                    }
                 }
-
+                
                 utils.info(msg);
 
                 // on invoque la fonction callback (4e paramètre passé à la méthode fire)
