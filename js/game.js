@@ -139,10 +139,17 @@
                 }
 
                 // décalage visuelle, le point d'ancrage du curseur est au milieu du bateau
-                let n = Math.floor(ship.getLife() / 2);
-                n = (n % 2 === 0) ? n - 0.5 : n; 
+
+                // change le décalage si le bateau est pair et qu'il est vertical
+                let halfShip = ship.getLife() / 2;
+                let n = Math.floor(halfShip);
+                let heightGap = 0;
+                if(halfShip % 2 === 0 && ship.isVertical === true) {
+                    n -= 0.5;
+                    heightGap = 0.5
+                }
                 
-                ship.dom.style.top = "" + (utils.eq(e.target.parentNode)) * utils.CELL_SIZE - (600 + this.players[0].activeShip * 60) + "px";
+                ship.dom.style.top = "" + (utils.eq(e.target.parentNode)) * utils.CELL_SIZE - (600 + this.players[0].activeShip * 60) - heightGap * utils.CELL_SIZE + "px";
                 ship.dom.style.left = "" + utils.eq(e.target) * utils.CELL_SIZE - n * utils.CELL_SIZE + "px";
             }
         },
@@ -156,6 +163,8 @@
                 let r = parseInt(ship.dom.style.rotate);
                 r = (r === 0) ? 90 : 0;
                 ship.dom.style.rotate = r + 'deg';
+
+                this.handleMouseMove(e);
             }
             
         },
