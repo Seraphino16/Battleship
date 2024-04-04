@@ -15,60 +15,64 @@
     }
 
     Ship = {
-        life: null,
         color: null,
-        name: null,
-        id: null,
         dom: null,
-        setName: function (name) {
-            this.name = name;
-        },
-        getName: function () {
-            return this.name;
-        },
-        setLife: function (life) {
-            this.life = parseInt(life, 10);
-        },
-        getLife: function () {
-            return this.life;
-        },
-        setColor: function (color) {
-            this.color = color;
-        },
         getColor: function () {
             return this.color;
         },
         getId: function () {
             return this.id;
         },
+        getLife: function () {
+            return this.life;
+        },
+        getName: function () {
+            return this.name;
+        },
+        id: null,
         init: function () {
             this.id = getShipNewIndex();
 
-            this.dom = document.createElement('div');
-            this.dom.style.height = "" + utils.CELL_SIZE + "px";
-            this.dom.style.width = "" + utils.CELL_SIZE * this.life + "px";
+            this.dom = document.createElement("div");
+            this.dom.style.height = utils.CELL_SIZE + "px";
+            this.dom.style.width = utils.CELL_SIZE * this.life + "px";
             this.dom.style.position = "relative";
             this.dom.style.opacity = "0.8";
             this.dom.style.rotate = "0deg";
             this.dom.style.backgroundColor = this.color;
 
             this.isVertical = false;
+        },
+        life: null,
+        name: null,
+
+        setColor: function (color) {
+            this.color = color;
+        },
+        setLife: function (life) {
+            this.life = parseInt(life, 10);
+        },
+
+        setName: function (name) {
+            this.name = name;
         }
     };
 
     shipFactory = {
-        TYPE_BATTLESHIP: 'battleship',
-        TYPE_DESTROYER: 'destroyer',
-        TYPE_SUBMARINE: 'submarine',
-        TYPE_SMALL_SHIP: 'small-ship',
+        TYPE_BATTLESHIP: "battleship",
+        TYPE_DESTROYER: "destroyer",
+        TYPE_SMALL_SHIP: "small-ship",
+        TYPE_SUBMARINE: "submarine",
+
 
         build: function (type, name) {
+
+            var newShip = _.assign({}, Ship, refType[type]);
 
             if (!refType[type]) {
                 return null;
             }
 
-            var newShip = _.assign({}, Ship, refType[type]);
 
             newShip.init();
 
@@ -81,24 +85,24 @@
     };
 
     refType[shipFactory.TYPE_BATTLESHIP] = {
+        color: "#e60019",
         life: 5,
-        name: "Battleship",
-        color: "#e60019"
+        name: "Battleship"
     };
     refType[shipFactory.TYPE_DESTROYER] = {
+        color: "#577cc2",
         life: 5,
-        name: "Destroyer",
-        color: "#577cc2"
+        name: "Destroyer"
     };
     refType[shipFactory.TYPE_SUBMARINE] = {
+        color: "#56988c",
         life: 4,
-        name: "Submarine",
-        color: "#56988c"
+        name: "Submarine"
     };
     refType[shipFactory.TYPE_SMALL_SHIP] = {
+        color: "#203140",
         life: 3,
-        name: "small-ship",
-        color: "#203140"
+        name: "small-ship"
     };
 
 
