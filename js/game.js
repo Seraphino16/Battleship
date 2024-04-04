@@ -196,22 +196,22 @@
                     }
                     // si on est dans la phase de jeu (du joueur humain)
                 } else if (this.getPhase() === this.PHASE_PLAY_PLAYER) {
-                    var clickedCell = e.target;
+                    const clickedCell = e.target;
+                    let alreadyClicked = false;
 
                     // si la case a déjà été cliquée, on ne fait rien
                     if (clickedCell.classList.contains('hit') || clickedCell.classList.contains('miss')) {
-                        console.log("already clicked");
-                        return;
+                        alreadyClicked = true;
                     }
 
                     // on enregistre le tir
-                    this.players[0].play(utils.eq(clickedCell), utils.eq(clickedCell.parentNode), clickedCell);
+                    this.players[0].play(utils.eq(clickedCell), utils.eq(clickedCell.parentNode), clickedCell, alreadyClicked);
                 }
             }
         },
         // fonction utlisée par les objets représentant les joueurs (ordinateur ou non)
         // pour placer un tir et obtenir de l'adversaire l'information de réusssite ou non du tir
-        fire: function (from, col, line, callback, clickedCell = undefined) {
+        fire: function (from, col, line, callback, clickedCell = undefined, alreadyClicked = false) {
             this.wait();
             var self = this;
             var msg = "";
@@ -228,20 +228,22 @@
             // on demande à l'attaqué si il a un bateaux à la position visée
             // le résultat devra être passé en paramètre à la fonction de callback (3e paramètre)
             target.receiveAttack(col, line, function (hasSucceed) {
-                if (hasSucceed) {
+                if (hasSucceed && !alreadyClicked) {
                     msg += "Touché !";
-                    if(clickedCell !== undefined) {
+                    if (clickedCell !== undefined) {
                         clickedCell.style.backgroundColor = "red";
                         clickedCell.classList.add('hit');
                     }
-                } else {
+                } else if (!hasSucceed && !alreadyClicked) {
                     msg += "Manqué...";
-                    if(clickedCell !== undefined) {
+                    if (clickedCell !== undefined) {
                         clickedCell.style.backgroundColor = "grey";
                         clickedCell.classList.add('miss');
                     }
+                } else if (alreadyClicked) {
+                    msg += "Vous avez déjà tiré ici !";
                 }
-                
+
                 utils.info(msg);
 
                 // on invoque la fonction callback (4e paramètre passé à la méthode fire)

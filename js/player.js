@@ -26,11 +26,11 @@
         setGame: function (game) {
             this.game = game;
         },
-        play: function (col, line, clickedCell) {
+        play: function (col, line, clickedCell, alreadyClicked) {
             // appel la fonction fire du game, et lui passe une calback pour récupérer le résultat du tir
             this.game.fire(this, col, line, _.bind(function (hasSucced) {
                 this.tries[line][col] = hasSucced;
-            }, this), clickedCell);
+            }, this), clickedCell, alreadyClicked);
         },
         // quand il est attaqué le joueur doit dire si il a un bateaux ou non à l'emplacement choisi par l'adversaire
         receiveAttack: function (col, line, callback) {
