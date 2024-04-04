@@ -12,8 +12,11 @@
         play: function () {
             var self = this;
             setTimeout(function () {
-                self.game.fire(this, 0, 0, function (hasSucced) {
-                    self.tries[0][0] = hasSucced;
+                var x = Math.floor(Math.random() * 10);
+                var y = Math.floor(Math.random() * 10);
+
+                self.game.fire(this, x, y, function (hasSucced) {
+                    self.tries[y][x] = hasSucced;
                 });
             }, 2000);
         },
