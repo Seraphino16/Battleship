@@ -264,7 +264,6 @@
                         clickedCell.classList.add('hit');
                     } else {
                         var cell = self.miniGrid.querySelector(`.row:nth-child(${line + 1}) .cell:nth-child(${col + 1})`);
-                        console.log(cell);
                         cell.style.backgroundColor = "orange";
                     }
                 } else if (!hasSucceed && !alreadyClicked) {
@@ -297,47 +296,9 @@
         },
         renderMiniMap: function () {
             this.players[0].fleet.forEach(ship => {
-                this.miniGrid.appendChild(ship.dom.cloneNode());
-                console.log(this.miniGrid)
-                
+                this.miniGrid.appendChild(ship.dom.cloneNode());                
             })
             this.miniGrid.style.transform = "scale(0.5) translateX(-250px) translateY(-14.25%)";
-
-            // const cellColorMap = {
-            //     1: "rgb(230, 0, 25)",
-            //     2: "rgb(87, 124, 194)",
-            //     3: "rgb(86, 152, 140)",
-            //     4: "rgb(32, 49, 64)",
-            //     default: "#fff",
-            //   };
-        
-            //   const colorClasses = {};
-            //   for (let key in cellColorMap) {
-            //     const color = cellColorMap[key];
-            //     if (!colorClasses[color]) {
-            //       colorClasses[color] = "color-" + key;
-            //       console.log(colorClasses);
-            //     }
-            //   }
-        
-            //   this.players[0].grid.forEach((row, y) => {
-            //     row.forEach((cell, x) => {
-            //       let cellNode = this.miniGrid.querySelector(
-            //         ".row:nth-child(" + (y + 1) + ") .cell:nth-child(" + (x + 1) + ")"
-            //       );
-            //       if (cellNode) {
-            //         const color = cellColorMap[cell] || cellColorMap["default"];
-            //         cellNode.style.backgroundColor = color;
-            //         const shipInstance = this.players[0].fleet.find(
-            //           (ship) => ship.getId() === cell
-            //         );
-            //         if (shipInstance) {
-            //           const shipName = shipInstance.getName();
-            //           cellNode.classList.add(shipName);
-            //         }
-            //       }
-            //     });
-            //   });
         }
     };
 

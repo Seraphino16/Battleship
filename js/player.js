@@ -57,15 +57,16 @@
                 var shipId = this.grid[line][col];
                 this.grid[line][col] = 0;
 
-                this.fleet.forEach(ship => {
-                    if(ship.id === shipId) {
-                        var touchedShip = ship;
-                        console.log(touchedShip);
-                        var newLife = touchedShip.getLife() - 1;
-                        touchedShip.setLife(newLife);
-                        console.log(touchedShip);
-                    }
-                })
+                const touchedShip = this.fleet.find(ship => ship.id === shipId);
+
+                var newLife = touchedShip.getLife() - 1;
+                newLife = newLife <= 0 ? 0 : newLife;
+                touchedShip.setLife(newLife);
+
+                if(this.game.currentPhase === "PHASE_PLAY_OPPONENT" && touchedShip.getLife() === 0) {
+                    var shipNode = document.querySelector(`.${touchedShip.name.toLowerCase()}`);
+                    shipNode.classList.add("sunk");
+                }
             }
             callback.call(undefined, succeed);
         },
