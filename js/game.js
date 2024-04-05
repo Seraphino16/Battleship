@@ -15,7 +15,7 @@
 
         currentPhase: "PHASE_CHOOSE_WHO_STARTS",
         phaseOrder: [],
-        // garde une référence vers l'indice du tableau phaseOrder qui correspond à la phase de jeu pour le joueur humain
+        // garde une référence vers l'indice du tableau phaseOrder qui correspond à la phase de jeu pour le joueur qui commence
         playerTurnPhaseIndex: 2,
 
         // l'interface utilisateur doit-elle être bloquée ?
@@ -71,8 +71,6 @@
                 });
             }
 
-            this.playerTurnPhaseIndex = 0;
-
             // initialise les joueurs
             this.setupPlayers();
 
@@ -101,16 +99,17 @@
             if (ci !== this.phaseOrder.length - 1) {
                 this.currentPhase = this.phaseOrder[ci + 1];
             } else {
-                this.currentPhase = this.phaseOrder[0];
+                this.currentPhase = this.phaseOrder[this.playerTurnPhaseIndex];
             }
-
+            
             switch (this.currentPhase) {
                 case this.PHASE_GAME_OVER:
                     // detection de la fin de partie
                     if (!this.gameIsOver()) {
                         // le jeu n'est pas terminé on recommence un tour de jeu
-                        this.currentPhase = this.phaseOrder[this.playerTurnPhaseIndex];
+                        this.goNextPhase();
                     }
+                    break;
                 case this.PHASE_INIT_PLAYER:
                     utils.info("Placez vos bateaux");
                     break;
