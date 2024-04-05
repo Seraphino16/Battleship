@@ -70,7 +70,6 @@
                     }
                 });
             }
-
             // initialise les joueurs
             this.setupPlayers();
 
@@ -105,9 +104,13 @@
             switch (this.currentPhase) {
                 case this.PHASE_GAME_OVER:
                     // detection de la fin de partie
-                    if (!this.gameIsOver()) {
+                    var winner = this.gameIsOver();
+
+                    if (winner === undefined) {
                         // le jeu n'est pas terminé on recommence un tour de jeu
                         this.goNextPhase();
+                    } else {
+                        alert(`The winner is ${winner}`);
                     }
                     break;
                 case this.PHASE_INIT_PLAYER:
@@ -132,7 +135,32 @@
 
         },
         gameIsOver: function () {
-            return false;
+            var winner = undefined
+            var playerIsDefeated = true;
+            var opponentIsDefeated = true;
+
+            this.players[0].fleet.forEach((ship) => {
+                if(ship.getLife() > 0) {
+                    playerIsDefeated = false;
+                }
+            })
+
+            this.players[1].fleet.forEach((ship) => {
+                if(ship.getLife() > 0) {
+                    opponentIsDefeated = false;
+                }
+            })
+
+            if(playerIsDefeated === true && opponentIsDefeated === true) {
+                winner = "draw";
+            } else if (opponentIsDefeated) {
+                winner = "Player 1";
+            } else if (playerIsDefeated) {
+                winner = "Player 2";
+            }
+
+            return winner;
+
         },
         getPhase: function () {
             if (this.waiting) {
