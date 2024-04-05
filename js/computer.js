@@ -11,14 +11,23 @@
         game: null,
         play: function () {
             var self = this;
-            setTimeout(function () {
-                var x = Math.floor(Math.random() * 10);
-                var y = Math.floor(Math.random() * 10);
-
-                self.game.fire(this, x, y, function (hasSucced) {
-                    self.tries[y][x] = hasSucced;
+            var shoot;
+            // setTimeout(function () {
+                do {
+                    shoot = self.pickCoordinates();
+                } while (self.tries[shoot.y][shoot.x] !== 0)
+                
+                self.game.fire(this, shoot.x, shoot.y, function (hasSucced) {
+                    self.tries[shoot.y][shoot.x] = hasSucced;
                 });
-            }, 2000);
+            // }, 2000);
+        },
+        pickCoordinates: function () {
+            var coordinates = {
+                x: Math.floor(Math.random() * 10),
+                y: Math.floor(Math.random() * 10)
+            };
+            return coordinates;
         },
         isShipOk: function (callback) {
 
@@ -32,9 +41,9 @@
                 k += 1;
             }
 
-            setTimeout(function () {
+            // setTimeout(function () {
                 callback();
-            }, 500);
+            // }, 500);
         },
         placement: function (ship) {
             let y = Math.floor(Math.random() * 10);
