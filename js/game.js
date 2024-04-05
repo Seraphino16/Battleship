@@ -7,12 +7,13 @@
     var game = {
         PHASE_INIT_PLAYER: "PHASE_INIT_PLAYER",
         PHASE_INIT_OPPONENT: "PHASE_INIT_OPPONENT",
+        PHASE_CHOOSE_WHO_STARTS: "PHASE_CHOOSE_WHO_STARTS",
         PHASE_PLAY_PLAYER: "PHASE_PLAY_PLAYER",
         PHASE_PLAY_OPPONENT: "PHASE_PLAY_OPPONENT",
         PHASE_GAME_OVER: "PHASE_GAME_OVER",
         PHASE_WAITING: "waiting",
 
-        currentPhase: "",
+        currentPhase: "PHASE_CHOOSE_WHO_STARTS",
         phaseOrder: [],
         // garde une référence vers l'indice du tableau phaseOrder qui correspond à la phase de jeu pour le joueur humain
         playerTurnPhaseIndex: 2,
@@ -34,14 +35,42 @@
             this.grid = document.querySelector('.board .main-grid');
             this.miniGrid = document.querySelector('.mini-grid');
 
-            // défini l'ordre des phase de jeu
-            this.phaseOrder = [
-                this.PHASE_INIT_PLAYER,
-                this.PHASE_INIT_OPPONENT,
-                this.PHASE_PLAY_PLAYER,
-                this.PHASE_PLAY_OPPONENT,
-                this.PHASE_GAME_OVER
-            ];
+            // fonction de choix du joueur qui commence qui sera rappelée lors de la phase de choix
+            var chooseWhoStarts = (player1Init, player2Init, player1PLay, player2Play, btnContainer) => {
+                // défini l'ordre des phase de jeu
+                this.phaseOrder = [
+                    player1Init,
+                    player2Init,
+                    player1PLay,
+                    player2Play,
+                    this.PHASE_GAME_OVER
+                ];
+                document.getElementById("choice").style.visibility = "hidden";
+                this.goNextPhase();
+            };
+
+            // on commence par choisir qui commence            
+            if (this.currentPhase === "PHASE_CHOOSE_WHO_STARTS") {
+
+                // cliquer sur un bouton pour choisir qui commence
+                document.querySelector(".choose-player").addEventListener("click", () => {
+                    chooseWhoStarts(this.PHASE_INIT_PLAYER, this.PHASE_INIT_OPPONENT, this.PHASE_PLAY_PLAYER, this.PHASE_PLAY_OPPONENT);
+                });
+                document.querySelector(".choose-computer").addEventListener("click", () => {
+                    chooseWhoStarts(this.PHASE_INIT_OPPONENT, this.PHASE_INIT_PLAYER, this.PHASE_PLAY_OPPONENT, this.PHASE_PLAY_PLAYER);
+                });
+                document.querySelector(".choose-random").addEventListener("click", () => {
+
+                    // choisir un nombre aléatoire entre 0 et 1 pour déterminer qui commence
+                    var choiceRandom = Math.floor(Math.random() * 2);
+                    if (choiceRandom === 0) {
+                        chooseWhoStarts(this.PHASE_INIT_PLAYER, this.PHASE_INIT_OPPONENT, this.PHASE_PLAY_PLAYER, this.PHASE_PLAY_OPPONENT);
+                    } else {
+                        chooseWhoStarts(this.PHASE_INIT_OPPONENT, this.PHASE_INIT_PLAYER, this.PHASE_PLAY_OPPONENT, this.PHASE_PLAY_PLAYER);
+                    }
+                });
+            }
+
             this.playerTurnPhaseIndex = 0;
 
             // initialise les joueurs
