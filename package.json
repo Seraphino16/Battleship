@@ -1,0 +1,25 @@
+{
+  "name": "w-jsc-501-lil-1-1-battleship-seraphin.benoit",
+  "version": "1.0.0",
+  "description": "NOTE D'INTENTION ================",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EpitechWebAcademiePromo2025/W-JSC-501-LIL-1-1-battleship-seraphin.benoit.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EpitechWebAcademiePromo2025/W-JSC-501-LIL-1-1-battleship-seraphin.benoit/issues"
+  },
+  "homepage": "https://github.com/EpitechWebAcademiePromo2025/W-JSC-501-LIL-1-1-battleship-seraphin.benoit#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
+    "@babel/preset-env": "^7.24.4"
+  }
+}
