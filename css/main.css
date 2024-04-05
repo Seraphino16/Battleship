@@ -6,6 +6,14 @@
 
 .main-container h1 {
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-container h1 iconify-icon {
+    margin-right: 10px;
+    font-size: 50px;
 }
 
 .left {
@@ -58,6 +66,10 @@
     height: 60px;
     /*border: 0;*/
     border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: calc(1em + 1vw);
 }
 
 .mini-grid {

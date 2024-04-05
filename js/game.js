@@ -261,6 +261,7 @@
                     msg += "Touché !";
                     if (clickedCell !== undefined) {
                         clickedCell.style.backgroundColor = "red";
+                        clickedCell.textContent = "X";
                         clickedCell.classList.add('hit');
                     } else {
                         var cell = self.miniGrid.querySelector(`.row:nth-child(${line + 1}) .cell:nth-child(${col + 1})`);
@@ -270,6 +271,7 @@
                     msg += "Manqué...";
                     if (clickedCell !== undefined) {
                         clickedCell.style.backgroundColor = "grey";
+                        clickedCell.textContent = "O";
                         clickedCell.classList.add('miss');
                     }
                 } else if (alreadyClicked) {
