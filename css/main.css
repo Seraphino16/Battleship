@@ -70,6 +70,7 @@
     justify-content: center;
     align-items: center;
     font-size: calc(1em + 1vw);
+    cursor: pointer;
 }
 
 .mini-grid {
@@ -155,7 +156,8 @@
     opacity: 0.1;
 }
 
-#choice {
+#choice,
+#replay {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -169,11 +171,17 @@
     z-index: 1;
 }
 
-#choice h1 {
+#replay {
+    display: none;
+}
+
+#choice h1,
+#replay h1 {
     color: white;
 }
 
-#choice .btn-container .btn {
+#choice .btn-container .btn,
+#replay .btn-container .btn {
     background-color: green;
     margin: 5px;
     padding: 5px;
@@ -182,6 +190,7 @@
     align-items: center;
 }
 
-#choice .btn-container .btn:hover {
+#choice .btn-container .btn:hover,
+#replay .btn-container .btn:hover {
     background-color: darkgreen;
 }

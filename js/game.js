@@ -1,6 +1,9 @@
 /*jslint browser this */
 /*global _, player, computer, utils */
 
+var player1 = "";
+var player2 = "";
+
 (function () {
     "use strict";
 
@@ -45,7 +48,7 @@
                     player2Play,
                     this.PHASE_GAME_OVER
                 ];
-                document.getElementById("choice").style.visibility = "hidden";
+                document.getElementById("choice").style.display = "none";
                 this.goNextPhase();
             };
 
@@ -55,9 +58,13 @@
                 // cliquer sur un bouton pour choisir qui commence
                 document.querySelector(".choose-player").addEventListener("click", () => {
                     chooseWhoStarts(this.PHASE_INIT_PLAYER, this.PHASE_INIT_OPPONENT, this.PHASE_PLAY_PLAYER, this.PHASE_PLAY_OPPONENT);
+                    player1 = "joueur";
+                    player2 = "ordinateur";
                 });
                 document.querySelector(".choose-computer").addEventListener("click", () => {
                     chooseWhoStarts(this.PHASE_INIT_OPPONENT, this.PHASE_INIT_PLAYER, this.PHASE_PLAY_OPPONENT, this.PHASE_PLAY_PLAYER);
+                    player1 = "ordinateur";
+                    player2 = "joueur";
                 });
                 document.querySelector(".choose-random").addEventListener("click", () => {
 
@@ -65,8 +72,12 @@
                     var choiceRandom = Math.floor(Math.random() * 2);
                     if (choiceRandom === 0) {
                         chooseWhoStarts(this.PHASE_INIT_PLAYER, this.PHASE_INIT_OPPONENT, this.PHASE_PLAY_PLAYER, this.PHASE_PLAY_OPPONENT);
+                        player1 = "joueur";
+                        player2 = "ordinateur";
                     } else {
                         chooseWhoStarts(this.PHASE_INIT_OPPONENT, this.PHASE_INIT_PLAYER, this.PHASE_PLAY_OPPONENT, this.PHASE_PLAY_PLAYER);
+                        player1 = "ordinateur";
+                        player2 = "joueur";
                     }
                 });
             }
@@ -100,7 +111,7 @@
             } else {
                 this.currentPhase = this.phaseOrder[this.playerTurnPhaseIndex];
             }
-            
+
             switch (this.currentPhase) {
                 case this.PHASE_GAME_OVER:
                     // detection de la fin de partie
@@ -110,7 +121,14 @@
                         // le jeu n'est pas terminé on recommence un tour de jeu
                         this.goNextPhase();
                     } else {
-                        alert(`The winner is ${winner}`);
+                        utils.info("Fin de partie");
+                        document.getElementById("replay").style.display = "flex";
+                        if (winner === "Match nul !") utils.info(winner);
+                        else if (winner === "joueur") document.querySelector("#replay h1").textContent = `Le ${winner} a gagné !`;
+                        else if (winner === "ordinateur") document.querySelector("#replay h1").textContent = `L'${winner} a gagné !`;
+                        document.querySelector(".replay-game").addEventListener("click", () => {
+                            window.location.reload();
+                        });
                     }
                     break;
                 case this.PHASE_INIT_PLAYER:
@@ -140,25 +158,26 @@
             var opponentIsDefeated = true;
 
             this.players[0].fleet.forEach((ship) => {
-                if(ship.getLife() > 0) {
+                if (ship.getLife() > 0) {
                     playerIsDefeated = false;
                 }
             })
 
             this.players[1].fleet.forEach((ship) => {
-                if(ship.getLife() > 0) {
+                if (ship.getLife() > 0) {
                     opponentIsDefeated = false;
                 }
             })
 
-            if(playerIsDefeated === true && opponentIsDefeated === true) {
-                winner = "draw";
+            if (playerIsDefeated === true && opponentIsDefeated === true) {
+                winner = "Match nul !";
             } else if (opponentIsDefeated) {
-                winner = "Player 1";
+                if (player1 === "joueur") winner = player1;
+                else winner = player2;
             } else if (playerIsDefeated) {
-                winner = "Player 2";
+                if (player1 === "ordinateur") winner = player1;
+                else winner = player2;
             }
-
             return winner;
 
         },
@@ -325,7 +344,7 @@
         },
         renderMiniMap: function () {
             this.players[0].fleet.forEach(ship => {
-                this.miniGrid.appendChild(ship.dom.cloneNode());                
+                this.miniGrid.appendChild(ship.dom.cloneNode());
             })
             this.miniGrid.style.transform = "scale(0.5) translateX(-250px) translateY(-14.25%)";
         }
