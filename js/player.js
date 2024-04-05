@@ -54,7 +54,18 @@
 
             if (this.grid[line][col] !== 0) {
                 succeed = true;
+                var shipId = this.grid[line][col];
                 this.grid[line][col] = 0;
+
+                this.fleet.forEach(ship => {
+                    if(ship.id === shipId) {
+                        var touchedShip = ship;
+                        console.log(touchedShip);
+                        var newLife = touchedShip.getLife() - 1;
+                        touchedShip.setLife(newLife);
+                        console.log(touchedShip);
+                    }
+                })
             }
             callback.call(undefined, succeed);
         },
