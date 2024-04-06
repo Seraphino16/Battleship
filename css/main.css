@@ -95,7 +95,7 @@
     display: inline-block;
 }
 
-.btn-container .btn, .btn-container input + label {
+.btn-container .btn, .btn-container input + label, #help {
     width: 100px;
     height: 25px;
     border-radius: 5px;
@@ -182,7 +182,8 @@
 
 #choice .btn-container .btn,
 #replay .btn-container .btn,
-.level-input + label {
+.level-input + label,
+#help {
     background-color: green;
     margin: 5px;
     padding: 5px;
@@ -210,4 +211,11 @@
 
 .level-input:checked + label {
     background-color: green;
+}
+
+#help {
+    background-color: rgb(66, 143, 66);
+    color: black;
+    height: 35px;
+    display: none;
 }

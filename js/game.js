@@ -58,7 +58,7 @@ var player2 = "";
                 // récupère la difficulté choisie à chaque début de partie
                 this.level = document.querySelector(".level-input:checked").value;
                 this.players[1].level = this.level;
-                
+
                 this.goNextPhase();
             };
 
@@ -159,6 +159,7 @@ var player2 = "";
                     break;
                 case this.PHASE_PLAY_PLAYER:
                     utils.info("A vous de jouer, choisissez une case !");
+                    this.helpButton.style.display = "block";
                     break;
                 case this.PHASE_PLAY_OPPONENT:
                     utils.info("A votre adversaire de jouer...");
@@ -224,6 +225,9 @@ var player2 = "";
             if(this.currentPhase !== this.PHASE_PLAY_PLAYER) {
                 return;
             }
+            if(this.grid.querySelectorAll(".suggestion").length > 0) {
+                return;
+            }
             var shoot;
             var cell;
             do {
@@ -231,7 +235,6 @@ var player2 = "";
             } while (this.players[0].tries[shoot.y][shoot.x] !== 0)
             console.log(shoot)
             cell = this.grid.querySelector(`.row:nth-child(${shoot.y + 1}) .cell:nth-child(${shoot.x + 1})`);
-            // cell.style.backgroundColor = "pink";
             cell.classList.add("suggestion")
         },
         handleMouseMove: function (e) {

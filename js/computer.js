@@ -13,7 +13,6 @@
         play: function () {
             var self = this;
             var shoot;
-            console.log(this.level);
             // setTimeout(function () {
                 // shoot = self.difficultIA();
 
