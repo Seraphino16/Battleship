@@ -23,7 +23,7 @@
                         } while (self.tries[shoot.y][shoot.x] !== 0)
                     case "difficile":
                         do {
-                            shoot = self.difficultIA();
+                            shoot = self.difficultIA(this);
                         } while (self.tries[shoot.y][shoot.x] !== 0)
                         break;
                 }
@@ -40,7 +40,8 @@
             };
             return coordinates;
         },
-        difficultIA: function () {
+        difficultIA: function (e) {
+            var self = e;
             var shoot;
             var bestShoots = [];
             var isVertical = false;
@@ -50,68 +51,68 @@
                 this.y = y;
             }
             // cherche les cases que l'ordinateur a touché
-            for(var y = 0; y < this.tries.length; y++) {
-                for(var x = 0; x < this.tries[y].length; x++) {
-                    if(this.tries[y][x] === true) {
+            for(var y = 0; y < self.tries.length; y++) {
+                for(var x = 0; x < self.tries[y].length; x++) {
+                    if(self.tries[y][x] === true) {
 
                         // vérifie si une autre case est touchée à coté pour attaquer dans le même sens
-                        if(x < this.tries[y].length - 1
-                            && this.tries[y][x + 1] === 0
-                            && this.tries[y][x - 1] !== undefined
-                            && this.tries[y][x - 1] === true) {
+                        if(x < self.tries[y].length - 1
+                            && self.tries[y][x + 1] === 0
+                            && self.tries[y][x - 1] !== undefined
+                            && self.tries[y][x - 1] === true) {
                             bestShoots.push(new Shoot(x + 1, y));
                         }
                         if(x > 0 
-                            && this.tries[y][x - 1] === 0
-                            && this.tries[y][x + 1] !== undefined
-                            && this.tries[y][x + 1] === true) {
+                            && self.tries[y][x - 1] === 0
+                            && self.tries[y][x + 1] !== undefined
+                            && self.tries[y][x + 1] === true) {
                             bestShoots.push(new Shoot(x - 1, y));
                         }
-                        if(y < this.tries.length - 1 
-                            && this.tries[y + 1][x] === 0
-                            && this.tries[y - 1] !== undefined
-                            && this.tries[y - 1][x] === true) {
+                        if(y < self.tries.length - 1 
+                            && self.tries[y + 1][x] === 0
+                            && self.tries[y - 1] !== undefined
+                            && self.tries[y - 1][x] === true) {
                             bestShoots.push(new Shoot(x, y + 1));
                         }
                         if(y > 0 
-                            && this.tries[y - 1][x] === 0
-                            && this.tries[y + 1] !== undefined
-                            && this.tries[y + 1][x] === true) {
+                            && self.tries[y - 1][x] === 0
+                            && self.tries[y + 1] !== undefined
+                            && self.tries[y + 1][x] === true) {
                             bestShoots.push(new Shoot(x, y - 1));
                         }
 
                         // vérifie si un sens a déja été trouvé (pour ne pas entourer le bateau)
-                        if((this.tries[y][x - 1] !== undefined
-                            && this.tries[y][x - 1] === true)
-                            || (this.tries[y][x + 1] !== undefined
-                            && this.tries[y][x + 1] === true)) {
+                        if((self.tries[y][x - 1] !== undefined
+                            && self.tries[y][x - 1] === true)
+                            || (self.tries[y][x + 1] !== undefined
+                            && self.tries[y][x + 1] === true)) {
                                 isHorizontal = true;
                         }
 
-                        if((this.tries[y - 1] !== undefined
-                            && this.tries[y - 1][x] === true)
-                            || (this.tries[y + 1] !== undefined
-                            && this.tries[y + 1][x] === true)) {
+                        if((self.tries[y - 1] !== undefined
+                            && self.tries[y - 1][x] === true)
+                            || (self.tries[y + 1] !== undefined
+                            && self.tries[y + 1][x] === true)) {
                                 isVertical = true;
                         }
 
                         // ajoute toutes les cases à côté si aucune n'a été touchée
                         if(bestShoots.length === 0) {
-                             if(x < this.tries[y].length - 1 
-                                && this.tries[y][x + 1] === 0
+                             if(x < self.tries[y].length - 1 
+                                && self.tries[y][x + 1] === 0
                                 && isVertical === false) {
                                 bestShoots.push(new Shoot(x + 1, y));
                             }
-                            if(x > 0 && this.tries[y][x - 1] === 0
+                            if(x > 0 && self.tries[y][x - 1] === 0
                                 && isVertical === false) {
                                 bestShoots.push(new Shoot(x - 1, y));
                             }
-                            if(y < this.tries.length - 1 
-                                && this.tries[y + 1][x] === 0
+                            if(y < self.tries.length - 1 
+                                && self.tries[y + 1][x] === 0
                                 && isHorizontal === false) {
                                 bestShoots.push(new Shoot(x, y + 1));
                             }
-                            if(y > 0 && this.tries[y - 1][x] === 0
+                            if(y > 0 && self.tries[y - 1][x] === 0
                                 && isHorizontal === false) {
                                 bestShoots.push(new Shoot(x, y - 1));
                             }

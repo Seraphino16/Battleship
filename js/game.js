@@ -28,6 +28,8 @@ var player2 = "";
         grid: null,
         miniGrid: null,
 
+        helpButton: null,
+
         // liste des joueurs
         players: [],
 
@@ -37,6 +39,7 @@ var player2 = "";
             // initialisation
             this.grid = document.querySelector('.board .main-grid');
             this.miniGrid = document.querySelector('.mini-grid');
+            this.helpButton = document.getElementById("help");
 
             // fonction de choix du joueur qui commence qui sera rappelée lors de la phase de choix
             var chooseWhoStarts = (player1Init, player2Init, player1PLay, player2Play, btnContainer) => {
@@ -116,6 +119,7 @@ var player2 = "";
                 case this.PHASE_GAME_OVER:
                     // detection de la fin de partie
                     var winner = this.gameIsOver();
+                    var title = document.querySelector("#replay h1");
 
                     if (winner === undefined) {
                         // le jeu n'est pas terminé on recommence un tour de jeu
@@ -123,9 +127,13 @@ var player2 = "";
                     } else {
                         utils.info("Fin de partie");
                         document.getElementById("replay").style.display = "flex";
-                        if (winner === "Match nul !") utils.info(winner);
-                        else if (winner === "joueur") document.querySelector("#replay h1").textContent = `Le ${winner} a gagné !`;
-                        else if (winner === "ordinateur") document.querySelector("#replay h1").textContent = `L'${winner} a gagné !`;
+                        if (winner === "Match nul !") {
+                            title.textContent = winner;
+                        } else if (winner === "joueur") {
+                            title.textContent = `Le ${winner} a gagné !`;
+                        } else if (winner === "ordinateur") {
+                            title.textContent = `L'${winner} a gagné !`;
+                        } 
                         document.querySelector(".replay-game").addEventListener("click", () => {
                             window.location.reload();
                         });
@@ -200,6 +208,24 @@ var player2 = "";
             this.grid.addEventListener('mousemove', _.bind(this.handleMouseMove, this));
             this.grid.addEventListener('click', _.bind(this.handleClick, this));
             this.grid.addEventListener('contextmenu', _.bind(this.handleRightClick, this));
+            this.helpButton.addEventListener(
+                "click",
+                _.bind(this.help, this)
+            )
+        },
+        help: function () {
+            if(this.currentPhase !== this.PHASE_PLAY_PLAYER) {
+                return;
+            }
+            var shoot;
+            var cell;
+            do {
+                shoot = this.players[1].difficultIA(this.players[0]);
+            } while (this.players[0].tries[shoot.y][shoot.x] !== 0)
+            console.log(shoot)
+            cell = this.grid.querySelector(`.row:nth-child(${shoot.y + 1}) .cell:nth-child(${shoot.x + 1})`);
+            // cell.style.backgroundColor = "pink";
+            cell.classList.add("suggestion")
         },
         handleMouseMove: function (e) {
             // on est dans la phase de placement des bateau
@@ -278,7 +304,11 @@ var player2 = "";
                     if (clickedCell.classList.contains('hit') || clickedCell.classList.contains('miss')) {
                         alreadyClicked = true;
                     }
-
+                    
+                    if(this.grid.querySelector(".suggestion")) {
+                        this.grid.querySelector(".suggestion").classList.remove("suggestion");
+                    }
+                    
                     // on enregistre le tir
                     this.players[0].play(utils.eq(clickedCell), utils.eq(clickedCell.parentNode), clickedCell, alreadyClicked);
                 }
@@ -332,10 +362,10 @@ var player2 = "";
 
                 // on fait une petite pause avant de continuer...
                 // histoire de laisser le temps au joueur de lire les message affiché
-                setTimeout(function () {
+                // setTimeout(function () {
                     self.stopWaiting();
                     self.goNextPhase();
-                }, 1000);
+                // }, 1000);
             });
 
         },

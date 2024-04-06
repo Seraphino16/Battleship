@@ -194,3 +194,7 @@
 #replay .btn-container .btn:hover {
     background-color: darkgreen;
 }
+
+.suggestion {
+    background-color: pink;
+}
