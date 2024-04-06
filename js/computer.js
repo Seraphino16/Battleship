@@ -9,19 +9,21 @@
         tries: [],
         fleet: [],
         game: null,
+        level: null,
         play: function () {
             var self = this;
             var shoot;
-            var mode = "difficile";
+            console.log(this.level);
             // setTimeout(function () {
                 // shoot = self.difficultIA();
 
-                switch(mode) {
-                    case "facile":
+                switch(self.level) {
+                    case "easy":
                          do {
                             shoot = self.pickRandomCoordinates();
                         } while (self.tries[shoot.y][shoot.x] !== 0)
-                    case "difficile":
+                        break;
+                    case "difficult":
                         do {
                             shoot = self.difficultIA(this);
                         } while (self.tries[shoot.y][shoot.x] !== 0)

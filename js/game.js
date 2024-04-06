@@ -40,6 +40,8 @@ var player2 = "";
             this.grid = document.querySelector('.board .main-grid');
             this.miniGrid = document.querySelector('.mini-grid');
             this.helpButton = document.getElementById("help");
+            
+
 
             // fonction de choix du joueur qui commence qui sera rappelée lors de la phase de choix
             var chooseWhoStarts = (player1Init, player2Init, player1PLay, player2Play, btnContainer) => {
@@ -52,6 +54,11 @@ var player2 = "";
                     this.PHASE_GAME_OVER
                 ];
                 document.getElementById("choice").style.display = "none";
+
+                // récupère la difficulté choisie à chaque début de partie
+                this.level = document.querySelector(".level-input:checked").value;
+                this.players[1].level = this.level;
+                
                 this.goNextPhase();
             };
 
