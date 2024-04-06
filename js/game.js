@@ -233,7 +233,7 @@ var player2 = "";
             do {
                 shoot = this.players[1].difficultIA(this.players[0]);
             } while (this.players[0].tries[shoot.y][shoot.x] !== 0)
-            console.log(shoot)
+
             cell = this.grid.querySelector(`.row:nth-child(${shoot.y + 1}) .cell:nth-child(${shoot.x + 1})`);
             cell.classList.add("suggestion")
         },

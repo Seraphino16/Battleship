@@ -40,8 +40,6 @@
             this.dom.style.opacity = "0.8";
             this.dom.style.rotate = "0deg";
             this.dom.style.backgroundColor = this.color;
-            
-            // this.dom.classList.add("ship", this.name.toLowerCase());
 
             this.isVertical = false;
         },

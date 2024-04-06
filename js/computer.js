@@ -5,6 +5,7 @@
     "use strict";
 
     var computer = _.assign({}, player, {
+        tries: [],
         difficultIA: function (e) {
             var self = e;
             var shoot;
@@ -179,7 +180,7 @@
                     break;
                 case "difficult":
                     do {
-                        shoot = self.difficultIA(this);
+                        shoot = self.difficultIA(self);
                     } while (self.tries[shoot.y][shoot.x] !== 0);
                     break;
                 }
@@ -189,7 +190,7 @@
                 });
             }, 2000);
         },
-        tries: []
+        
     });
 
     global.computer = computer;
