@@ -12,26 +12,24 @@
         play: function () {
             var self = this;
             var shoot;
+            var mode = "difficile";
             // setTimeout(function () {
                 // shoot = self.difficultIA();
-                do {
-                    shoot = self.difficultIA();
-                } while (self.tries[shoot.y][shoot.x] !== 0)
 
-                console.log(shoot);
+                switch(mode) {
+                    case "facile":
+                         do {
+                            shoot = self.pickRandomCoordinates();
+                        } while (self.tries[shoot.y][shoot.x] !== 0)
+                    case "difficile":
+                        do {
+                            shoot = self.difficultIA();
+                        } while (self.tries[shoot.y][shoot.x] !== 0)
+                        break;
+                }
 
-
-                // do {
-                //     shoot = self.pickRandomCoordinates();
-                // } while (self.tries[shoot.y][shoot.x] !== 0)
-                
                 self.game.fire(this, shoot.x, shoot.y, function (hasSucced) {
                     self.tries[shoot.y][shoot.x] = hasSucced;
-                    let k = 0;
-                    while(k < self.tries.length) {
-                        console.log(self.tries[k]);
-                        k += 1;
-                    }
                 });
             // }, 2000);
         },
@@ -43,13 +41,6 @@
             return coordinates;
         },
         difficultIA: function () {
-            console.log('new shoot')
-            // let k = 0;
-            // while(k < this.tries.length) {
-            //     console.log(this.tries[k]);
-            //     k += 1;
-            // }
-
             var shoot;
             var bestShoots = [];
             var isVertical = false;
@@ -95,7 +86,6 @@
                             || (this.tries[y][x + 1] !== undefined
                             && this.tries[y][x + 1] === true)) {
                                 isHorizontal = true;
-                                console.log(isHorizontal)
                         }
 
                         if((this.tries[y - 1] !== undefined
@@ -103,10 +93,7 @@
                             || (this.tries[y + 1] !== undefined
                             && this.tries[y + 1][x] === true)) {
                                 isVertical = true;
-                                console.log(isVertical)
                         }
-
-
 
                         // ajoute toutes les cases à côté si aucune n'a été touchée
                         if(bestShoots.length === 0) {
@@ -131,12 +118,10 @@
                         }
                        
                     }
+                    isHorizontal = false;
+                    isVertical = false;
                 }
-
-                isHorizontal = false;
-                isVertical = false;
             }
-            console.log(bestShoots);
 
             shoot = bestShoots.length > 0 ? _.sample(bestShoots) : this.pickRandomCoordinates();
             return shoot
@@ -146,12 +131,6 @@
             this.fleet.forEach(function (ship) {
                while(!this.placement(ship));
             }, this);
-
-            // let k = 0;
-            // while(k < this.grid.length) {
-            //     console.log(this.grid[k]);
-            //     k += 1;
-            // }
 
             // setTimeout(function () {
                 callback();
