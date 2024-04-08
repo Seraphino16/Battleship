@@ -51,21 +51,33 @@
         //  ou non à l'emplacement choisi par l'adversaire
         receiveAttack: function (col, line, callback) {
             var succeed = false;
+            var shipId;
+            var shipNode;
 
             if (this.grid[line][col] !== 0) {
                 succeed = true;
-                var shipId = this.grid[line][col];
+                shipId = this.grid[line][col];
                 this.grid[line][col] = 0;
 
-                const touchedShip = this.fleet.find(ship => ship.id === shipId);
+                const touchedShip = this.fleet.find(function (ship) {
+                    return ship.id === shipId;
+                });
 
                 var newLife = touchedShip.getLife() - 1;
-                newLife = newLife <= 0 ? 0 : newLife;
+                newLife = (
+                    newLife <= 0
+                    ? 0
+                    : newLife
+                );
                 touchedShip.setLife(newLife);
 
-                if(this.game.currentPhase === "PHASE_PLAY_OPPONENT" && touchedShip.getLife() === 0) {
-                    var shipNode = document.querySelector(`.${touchedShip.name.toLowerCase()}`);
-                    shipNode.classList.add("sunk");
+                if (this.game.currentPhase === "PHASE_PLAY_OPPONENT") {
+                    if (touchedShip.getLife() === 0) {
+                        shipNode = document.querySelector(
+                            `.${touchedShip.name.toLowerCase()}`
+                        );
+                        shipNode.classList.add("sunk");
+                    }
                 }
             }
             callback.call(undefined, succeed);
@@ -76,7 +88,10 @@
             this.tries.forEach(function (row, rid) {
                 row.forEach(function (val, col) {
 
-                    var node = grid.querySelector(".row:nth-child(" + (rid + 1) + ") " + ".cell:nth-child(" + (col + 1) + ")");
+                    var node = grid.querySelector(
+                        ".row:nth-child(" + (rid + 1) + ") " +
+                        ".cell:nth-child(" + (col + 1) + ")"
+                    );
 
 
                     if (val === true) {
@@ -121,8 +136,10 @@
                 y -= n;
 
                 while (i < ship.getLife()) {
-                    if (this.grid[y + i] === undefined || this.grid[y + i][x] !== 0) {
-                        return false;
+                    if (this.grid[y + i] === undefined) {
+                        if (this.grid[y + i][x] !== 0) {
+                            return false;
+                        }
                     }
                     i += 1;
                 }
