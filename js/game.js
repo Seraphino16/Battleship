@@ -477,10 +477,10 @@ var player2 = "";
                 // on fait une petite pause avant de continuer...
                 // histoire de laisser le temps au joueur de
                 // lire les message affiché
-                // setTimeout(function () {
+                setTimeout(function () {
                     self.stopWaiting();
                     self.goNextPhase();
-                // }, 1000);
+                }, 1000);
             });
 
         },
