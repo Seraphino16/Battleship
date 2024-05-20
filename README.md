@@ -1,12 +1,21 @@
-NOTE D'INTENTION
-================
+# Battleship
+## Overview
+This is a school project made by team of 2.
 
-Le code est organisé autour de différents composants (objet) les principaux étant le "jeu" (fichier game.js), et les joueurs (fichier player.js et computer.js), chacun des objets est accessible dans le scope global.
+We were given a broken project and the goal for us was to debug it in order to get a playable game.
+## Features
 
-au chargement de la page on invoque la méthode init de l'objet game. Ce dernier contient et gère "l'état" du jeu (qui sont les adversaires, à quelle phase de jeu en est-on, à qui est-ce de jouer, etc...) et permet (appelle la fonction), ou ne permet pas (ne fait rien) les actions des différents joueurs.
+It is a classical battleship game :
+   - place your ships on the grid
+   - shoot and try to sink your opponent float
+     
 
-un joueur est représenté par un objet player (fichier player.js), et contient des méthodes inhérentes à "l'état" du joueur (sa flotte, la position de chaque bateau, les tirs effectués, etc...). L'objet computer (fichier computer.js), est "dérivé" de l'objet player, grace à la librairie "_" (prononcez "lodash"), et sa méthode "assign".
+When opening the project, you can choose who starts between you and the computer.
+You can choose the difficulty too :
+  - `easy` : the computer shoots randomly
+  - `difficult` : when the computer hits one of your boats, it will target the cases around.
 
-l'objet utils (fichier utils.js), est un objet contenant des méthodes utilitaires et transverses.
+## Get started
 
-l'objet shipFactory (fichier shipFactory.js) est un objet qui simplifie la création des bateaux.
+- Clone or download this repository
+- Open the `index.html` file in your browser
