@@ -2,7 +2,7 @@
 ## Overview
 This is a school project made by team of 2.
 
-We were given a broken project and the goal for us was to debug it in order to get a playable game.
+We were given a non functionnal project and the goal for us was to debug it in order to get a playable game.
 ## Features
 
 It is a classical battleship game :
